@@ -1,0 +1,39 @@
+{
+  "id": 1,
+  "address": "123 Collins Street",
+  "suburb": "Melbourne CBD",
+  "price": 850000,
+  "sqft": 1200,
+  "bedrooms": 2,
+  "bathrooms": 2,
+  "propertyType": "Apartment",
+  "date": "2024-11-15",
+  "imageUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+  "description": "Stunning modern apartment in the heart of Melbourne CBD. Features floor-to-ceiling windows with breathtaking city views, high-end finishes throughout, and access to premium building amenities including gym, pool, and concierge service.",
+  "features": [
+    "Floor-to-ceiling windows",
+    "City views",
+    "Modern kitchen with stone benchtops",
+    "Built-in wardrobes",
+    "Secure parking",
+    "Building gym and pool",
+    "24/7 concierge",
+    "Ducted heating and cooling"
+  ],
+  "yearBuilt": 2020,
+  "parking": 1,
+  "lotSize": 1200,
+  "heating": "Ducted",
+  "cooling": "Ducted",
+  "status": "Available",
+  "images": [
+    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+  ],
+  "agent": {
+    "name": "Sarah Johnson",
+    "phone": "0412 345 678",
+    "email": "sarah@propertyportal.com.au"
+  }
+}
