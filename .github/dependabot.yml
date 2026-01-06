@@ -1,0 +1,44 @@
+# Dependabot configuration for automated dependency updates and security scanning
+# This will check for updates weekly and create PRs automatically
+
+version: 2
+updates:
+  # Monitor npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    # Group updates to reduce PR noise
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+    # Keep PRs manageable
+    open-pull-requests-limit: 5
+    # Add labels for easy filtering
+    labels:
+      - "dependencies"
+      - "automated"
+    # Automatically rebase when conflicts occur
+    rebase-strategy: "auto"
+    # Security updates get higher priority
+    versioning-strategy: "increase"
+    # Ignore major version updates for stable packages (can be removed if you want all updates)
+    ignore:
+      # Uncomment to ignore specific major versions during migration periods
+      # - dependency-name: "next"
+      #   update-types: ["version-update:semver-major"]
+
+  # Monitor GitHub Actions (if you add any workflows later)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    labels:
+      - "github-actions"
+      - "automated"
