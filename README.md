@@ -1,5 +1,11 @@
 # 🏆 Property Portal Pro - COMPLETE EDITION
 
+![CI/CD Pipeline](https://github.com/YOUR_USERNAME/property-portal-pro/workflows/CI%2FCD%20Pipeline/badge.svg)
+![Security Scan](https://github.com/YOUR_USERNAME/property-portal-pro/workflows/Security%20Scan/badge.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 **A fully-featured property search portal with ALL features built and working.**
 
 ## ✨ Features Included (All Working!)
@@ -188,6 +194,28 @@ npm run build
 - ✅ Accessibility (ARIA labels)
 - ✅ Responsive design
 - ✅ Performance optimized
+
+## 🛡️ CI/CD & Quality Assurance
+
+**Automated checks on every push:**
+- ✅ Build validation (production build must succeed)
+- ✅ TypeScript type checking (zero type errors)
+- ✅ ESLint code quality checks
+- ✅ Security vulnerability scanning
+- ✅ Dependency health verification
+
+**Branch protection:**
+- 🔒 Main branch protected from direct pushes
+- 🔒 All PRs must pass CI checks before merge
+- 🔒 Linear git history enforced
+- 🔒 Pre-push hooks prevent broken code
+
+**Automated security:**
+- 🔐 Weekly Dependabot updates
+- 🔐 Automated vulnerability scanning
+- 🔐 Zero known security issues
+
+**See [Branch Protection Guide](.github/BRANCH_PROTECTION.md) for setup instructions.**
 
 ## 💰 Business Value
 

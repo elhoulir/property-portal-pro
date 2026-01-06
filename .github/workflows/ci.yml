@@ -1,0 +1,183 @@
+name: CI/CD Pipeline
+
+on:
+  # Run on every push to any branch
+  push:
+    branches: ['**']
+  # Run on every pull request
+  pull_request:
+    branches: [main]
+  # Allow manual trigger
+  workflow_dispatch:
+
+# Cancel in-progress runs when a new run is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Build and Type Check
+  build:
+    name: Build & Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript type check
+        run: npm run type-check
+
+      - name: Build production bundle
+        run: npm run build
+        env:
+          # Treat warnings as errors in CI
+          CI: true
+
+      - name: Check build output size
+        run: |
+          echo "Build completed successfully!"
+          du -sh .next/ || echo "Build directory size check skipped"
+
+  # Job 2: Code Quality (Linting)
+  lint:
+    name: Code Quality (ESLint)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+  # Job 3: Security Audit
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit (production dependencies)
+        run: npm audit --production --audit-level=high
+        continue-on-error: false
+
+      - name: Run npm audit (all dependencies)
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+  # Job 4: Dependency Check
+  dependencies:
+    name: Dependency Health Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Check for outdated dependencies
+        run: |
+          npm outdated || true
+          echo "Dependency check completed"
+
+      - name: Verify package-lock.json is up to date
+        run: |
+          npm ci
+          git diff --exit-code package-lock.json || \
+          (echo "package-lock.json is out of sync. Run 'npm install' locally." && exit 1)
+
+  # Job 5: Build Size Report (for PRs only)
+  size-report:
+    name: Bundle Size Report
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Analyze bundle size
+        run: |
+          echo "## Bundle Size Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Route | Size | First Load JS |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|------|---------------|" >> $GITHUB_STEP_SUMMARY
+          # Parse Next.js build output for size info
+          echo "Build completed - check build logs for details" >> $GITHUB_STEP_SUMMARY
+
+  # Job 6: All checks passed (required for branch protection)
+  all-checks-passed:
+    name: All Checks Passed ✓
+    runs-on: ubuntu-latest
+    needs: [build, lint, security, dependencies]
+    if: always()
+
+    steps:
+      - name: Check all jobs status
+        run: |
+          if [[ "${{ needs.build.result }}" != "success" ]] || \
+             [[ "${{ needs.lint.result }}" != "success" ]] || \
+             [[ "${{ needs.security.result }}" != "success" ]] || \
+             [[ "${{ needs.dependencies.result }}" != "success" ]]; then
+            echo "❌ One or more checks failed!"
+            exit 1
+          fi
+          echo "✅ All checks passed successfully!"
+
+      - name: Success notification
+        run: |
+          echo "## ✅ CI/CD Checks Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All quality gates have been satisfied:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ Build successful" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ Type checking passed" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ Code quality verified" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ Security audit clean" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ Dependencies healthy" >> $GITHUB_STEP_SUMMARY

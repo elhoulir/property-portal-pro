@@ -1,0 +1,115 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🚀 New Feature Branch",
+      "type": "shell",
+      "command": "git checkout main && git pull origin main && git checkout -b feature/${input:featureName}",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🔄 Sync with Main",
+      "type": "shell",
+      "command": "git fetch origin && git rebase origin/main",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "✅ Quick Commit",
+      "type": "shell",
+      "command": "git add . && git commit -m '${input:commitMessage}'",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "📤 Push Feature",
+      "type": "shell",
+      "command": "git push -u origin $(git branch --show-current)",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🏗️ Build & Test",
+      "type": "shell",
+      "command": "npm run build",
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🔍 Git Status",
+      "type": "shell",
+      "command": "git status",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "📊 Git Log (Pretty)",
+      "type": "shell",
+      "command": "git log --oneline --graph --decorate --all -10",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🧹 Cleanup Merged Branches",
+      "type": "shell",
+      "command": "git checkout main && git pull origin main && git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🎯 Full Workflow: Commit → Sync → Push",
+      "dependsOn": ["✅ Quick Commit", "🔄 Sync with Main", "📤 Push Feature"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "featureName",
+      "description": "Feature name (e.g., 'add-search-filters')",
+      "type": "promptString"
+    },
+    {
+      "id": "commitMessage",
+      "description": "Commit message",
+      "type": "promptString"
+    }
+  ]
+}
