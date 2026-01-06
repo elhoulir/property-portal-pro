@@ -81,7 +81,7 @@ export function ContactForm({ property, onClose }: ContactFormProps) {
                     </div>
                     <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
                     <p className="text-muted-foreground mb-6">
-                        We'll get back to you shortly about<br />
+                        We&apos;ll get back to you shortly about<br />
                         <span className="font-semibold">{property.address}</span>
                     </p>
                     <Button onClick={onClose}>Close</Button>

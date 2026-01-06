@@ -18,7 +18,7 @@ export function PropertyList({ properties, onPropertyClick }: PropertyListProps)
         </div>
         <h3 className="text-2xl font-semibold mb-2">No properties found</h3>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Try adjusting your filters or search criteria to find what you're looking for.
+          Try adjusting your filters or search criteria to find what you&apos;re looking for.
         </p>
       </div>
     );
