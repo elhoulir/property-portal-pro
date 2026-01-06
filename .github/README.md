@@ -315,7 +315,7 @@ You have access to:
 ├── BRANCH_PROTECTION.md        ← CI/CD setup (20 min)
 ├── CI_CD_SUMMARY.md            ← CI/CD overview (10 min)
 ├── CI_CD_DIAGRAM.md            ← Architecture visuals
-├── copilot-instructions.md     ← AI development guide
+├── DEVELOPER_GUIDE.md          ← Quick development reference
 ├── dependabot.yml              ← Auto-update config
 └── workflows/
     ├── ci.yml                  ← Main CI/CD pipeline

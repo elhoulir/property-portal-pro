@@ -1,7 +1,6 @@
-<!-- Copilot instructions for property-portal-pro -->
-# Copilot / AI Agent Instructions
+# Developer Guide
 
-Purpose: quickly orient an AI coding agent to this Next.js + TypeScript property portal so it can make safe, useful edits.
+A quick reference guide for developers working on this Next.js + TypeScript property portal.
 
 - Project type: Next.js 14 app router, TypeScript, Tailwind CSS. Start/dev/build: `npm run dev`, `npm run build`, `npm run start` (see `package.json`).
 - Source of truth (UI): `app/page.tsx` — main state, filtering, sorting, and CSV export. `app/layout.tsx` wraps the app with context providers.
@@ -30,11 +29,11 @@ Build / run / debug
 - Production build: `npm run build` then `npm run start` for server-start.
 - Linting/tests: none configured in this repo. Add tools conservatively — follow existing TypeScript settings (`tsconfig.json`).
 
-Safety & constraints for automated edits
+Important considerations
 - Do not change the providers order in `app/layout.tsx` without verifying hydration and SSR behavior.
 - Client-only code (`'use client'`) uses `window` and `localStorage`; keep these in client components.
 - Keep the `Property` type shape in `app/types/property.ts` in sync with uses in `page.tsx`, contexts and `properties.json`.
-- Prefer small, focused changes (one component or util per PR) to reduce risk.
+- Prefer small, focused changes (one component or utility per PR) to reduce risk.
 
 Where to look first for specific features
 - Favorites: `app/context/FavoritesContext.tsx`, `app/components/PropertyCard.tsx`.
@@ -45,8 +44,7 @@ Where to look first for specific features
 If something is missing
 - Check `README.md` for high-level feature descriptions and demo usage; it documents many interactive behaviours used by the UI.
 
-Questions for the repo owner (leave as comments in PRs)
-- Is `app/data/properties.json` authoritative or should new data be fetched externally (Google Sheets integration referenced in README)?
-- Preferred Node / npm versions to pin in CI?
-
-If you'd like edits, tell me the target file(s) and the intended behavior change. I'll produce a minimal PR with tests or manual verification steps when applicable.
+Notes
+- Currently uses `app/data/properties.json` for sample data. Consider external data sources for production.
+- Node 20.x and npm latest are recommended for development.
+- When making changes, always test locally with `npm run build` before committing.

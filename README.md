@@ -1,7 +1,7 @@
 # 🏆 Property Portal Pro - COMPLETE EDITION
 
-![CI/CD Pipeline](https://github.com/YOUR_USERNAME/property-portal-pro/workflows/CI%2FCD%20Pipeline/badge.svg)
-![Security Scan](https://github.com/YOUR_USERNAME/property-portal-pro/workflows/Security%20Scan/badge.svg)
+![CI/CD Pipeline](https://github.com/elhoulir/property-portal-pro/workflows/CI%2FCD%20Pipeline/badge.svg)
+![Security Scan](https://github.com/elhoulir/property-portal-pro/workflows/Security%20Scan/badge.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.2-black.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
